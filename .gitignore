@@ -1,0 +1,96 @@
+# ==============================================================================
+# MS DubStudio — .gitignore
+# Python / PyQt6 / Windows
+# ==============================================================================
+
+# ------------------------------------------------------------------------------
+# Python
+# ------------------------------------------------------------------------------
+__pycache__/
+*.py[cod]
+*$py.class
+*.pyo
+*.pyd
+*.so
+*.egg
+*.egg-info/
+dist/
+build/
+sdist/
+wheels/
+pip-wheel-metadata/
+MANIFEST
+
+# Virtual environments
+.venv/
+venv/
+env/
+ENV/
+.python-version
+
+# Pytest / coverage
+.pytest_cache/
+.coverage
+.coverage.*
+htmlcov/
+coverage.xml
+*.cover
+
+# mypy / ruff / pyright
+.mypy_cache/
+.ruff_cache/
+pyrightconfig.json
+
+# ------------------------------------------------------------------------------
+# Environment / Secrets
+# (API key được lưu trong %APPDATA%/MS DubStudio/config.json, ngoài repo.
+#  Nhưng nếu ai dùng .env để override thì ignore luôn.)
+# ------------------------------------------------------------------------------
+.env
+.env.*
+*.secret
+*_secret.py
+config.local.json
+
+# ------------------------------------------------------------------------------
+# AI / ML model weights
+# (Whisper cache mặc định ở ~/.cache/huggingface/ — ngoài repo.
+#  Nếu ai tải model về trong repo thì ignore.)
+# ------------------------------------------------------------------------------
+models/
+*.bin
+*.pt
+*.ckpt
+*.safetensors
+*.gguf
+*.onnx
+
+# ------------------------------------------------------------------------------
+# Runtime output
+# (Projects và logs được lưu ra ~/Documents/MS DubStudio Projects/ và
+#  %APPDATA%/MS DubStudio/ — ngoài repo.
+#  Các thư mục dưới đây chỉ ignore phòng trường hợp ai chạy thử trong repo.)
+# ------------------------------------------------------------------------------
+output/
+temp/
+tmp/
+*.log
+*.tmp
+
+# ------------------------------------------------------------------------------
+# IDE
+# ------------------------------------------------------------------------------
+.vscode/
+.idea/
+*.swp
+*.swo
+*~
+.DS_Store
+Thumbs.db
+
+# ------------------------------------------------------------------------------
+# Distribution / packaging
+# ------------------------------------------------------------------------------
+*.spec
+dist/
+build/

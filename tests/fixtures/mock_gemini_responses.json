@@ -1,0 +1,78 @@
+[
+  {
+    "case": "success_batch_1",
+    "description": "Batch 1: 3 segment dịch thành công",
+    "request": {
+      "model": "gemini-1.5-pro",
+      "segments": [
+        {"id": 1, "text": "今天天气真好"},
+        {"id": 2, "text": "你好世界"},
+        {"id": 3, "text": "谢谢你"}
+      ]
+    },
+    "response": [
+      {"id": 1, "text_vi": "Hôm nay thời tiết thật tốt"},
+      {"id": 2, "text_vi": "Xin chào thế giới"},
+      {"id": 3, "text_vi": "Cảm ơn bạn"}
+    ]
+  },
+  {
+    "case": "error_429",
+    "description": "HTTP 429 Rate Limit — dùng để test retry logic",
+    "http_status": 429,
+    "error": {
+      "code": 429,
+      "message": "Resource has been exhausted (e.g. check quota).",
+      "status": "RESOURCE_EXHAUSTED",
+      "details": [
+        {
+          "@type": "type.googleapis.com/google.rpc.ErrorInfo",
+          "reason": "RATE_LIMIT_EXCEEDED"
+        }
+      ]
+    }
+  },
+  {
+    "case": "error_content_blocked",
+    "description": "Safety filter block — dùng để test ContentBlockedError",
+    "http_status": 200,
+    "response_blocked": true,
+    "finish_reason": "SAFETY",
+    "safety_ratings": [
+      {"category": "HARM_CATEGORY_DANGEROUS_CONTENT", "probability": "HIGH"}
+    ]
+  },
+  {
+    "case": "error_invalid_api_key",
+    "description": "API key sai — FatalApiError, không retry",
+    "http_status": 401,
+    "error": {
+      "code": 401,
+      "message": "API key not valid. Please pass a valid API key.",
+      "status": "UNAUTHENTICATED"
+    }
+  },
+  {
+    "case": "error_model_not_found",
+    "description": "Model không tồn tại — FatalApiError",
+    "http_status": 404,
+    "error": {
+      "code": 404,
+      "message": "models/gemini-99 is not found for API version v1",
+      "status": "NOT_FOUND"
+    }
+  },
+  {
+    "case": "success_partial_response",
+    "description": "Gemini chỉ trả về 2/3 segment — segment thiếu sẽ là ERROR",
+    "response": [
+      {"id": 1, "text_vi": "Hôm nay thời tiết thật tốt"},
+      {"id": 3, "text_vi": "Cảm ơn bạn"}
+    ]
+  },
+  {
+    "case": "error_invalid_json",
+    "description": "Response không phải JSON hợp lệ — StructuredOutputError",
+    "raw_response": "Xin lỗi, tôi không thể dịch đoạn này."
+  }
+]

@@ -1,0 +1,74 @@
+[build-system]
+requires = ["setuptools>=68", "wheel"]
+build-backend = "setuptools.backends.legacy:build"
+
+[project]
+name = "ms-dubstudio"
+version = "0.1.0"
+description = "Desktop app tự động dịch và lồng tiếng video Trung → Việt"
+readme = "README.md"
+requires-python = ">=3.11"
+dependencies = [
+    # UI
+    "PyQt6>=6.6.0",
+    # Data models
+    "pydantic>=2.5.0",
+    # AI/ML
+    "google-generativeai>=0.7.0",
+    # TTS
+    "edge-tts>=6.1.0",
+    # Audio/Video processing
+    "numpy>=1.26.0",
+    # Faster Whisper (primary STT backend)
+    "faster-whisper>=1.0.0",
+    # Scene detection
+    "scenedetect[opencv]>=0.6.3",
+]
+
+[project.optional-dependencies]
+# openai-whisper as fallback STT backend
+openai-whisper = [
+    "openai-whisper>=20231117",
+]
+# GPU support for Whisper
+gpu = [
+    "torch>=2.0.0",
+    "torchvision>=0.15.0",
+]
+# Development & testing
+dev = [
+    "pytest>=7.4.0",
+    "pytest-qt>=4.3.0",
+    "pytest-cov>=4.1.0",
+]
+
+[tool.setuptools.packages.find]
+where = ["."]
+include = ["msdubstudio*"]
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]
+python_files = ["test_*.py"]
+python_classes = ["Test*"]
+python_functions = ["test_*"]
+addopts = [
+    "-v",
+    "--tb=short",
+    # Không chạy test cần ffmpeg thật trừ khi có flag --run-integration
+    "--ignore=tests/integration",
+]
+markers = [
+    "integration: marks tests as integration tests (require real ffmpeg/API)",
+    "slow: marks tests that take more than 1 second",
+]
+filterwarnings = [
+    "ignore::DeprecationWarning:pydantic",
+]
+
+[tool.coverage.run]
+source = ["msdubstudio"]
+omit = ["msdubstudio/ui/*", "msdubstudio/main.py"]
+
+[tool.coverage.report]
+show_missing = true
+skip_empty = true

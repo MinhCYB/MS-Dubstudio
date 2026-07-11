@@ -305,7 +305,7 @@ class STTView(QWidget):
         self._console.log_success(f"{count} segments created")
 
     def _on_stt_error(self, msg: str) -> None:
-        self._mw.project.on_stt_failed(msg)
+        self._mw.project.on_stt_error(msg)
         self._console.log_error(f"STT Error: {msg}")
 
     # ------------------------------------------------------------------

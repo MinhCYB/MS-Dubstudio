@@ -255,5 +255,5 @@ class ExportView(QWidget):
         )
 
     def _on_render_error(self, msg: str) -> None:
-        self._mw.project.on_export_failed(msg)
+        self._mw.project.on_export_error(msg)
         self._lbl_render_status.setText(f"✕ Error: {msg}")

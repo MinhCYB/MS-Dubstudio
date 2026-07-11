@@ -329,15 +329,21 @@ class ImportView(QWidget):
 
         from msdubstudio.workers.import_worker import ImportWorker
 
-        self._mw.project.settings.extract_audio = self._chk_audio.isChecked()
-        self._mw.project.settings.detect_scenes = self._chk_scenes.isChecked()
-        self._mw.project.settings.detect_language = self._chk_lang.isChecked()
+        current_settings = self._mw.project.data.settings
+        new_settings = current_settings.model_copy(
+            update={
+                "extract_audio": self._chk_audio.isChecked(),
+                "detect_scenes": self._chk_scenes.isChecked(),
+                "detect_language": self._chk_lang.isChecked(),
+            }
+        )
+        self._mw.project.update_settings(new_settings)
 
         worker = ImportWorker(
             video_path=self._video_path,
             audio_output_path=str(self._mw.project.audio_path),
             frames_dir=str(self._mw.project.frames_dir),
-            settings=self._mw.project.settings,
+            settings=self._mw.project.data.settings,
         )
         self._mw.set_active_worker(worker)
 
@@ -361,7 +367,7 @@ class ImportView(QWidget):
         self._lbl_status.setText(f"✓ Import complete — {len(scenes)} scenes detected")
 
     def _on_import_error(self, msg: str) -> None:
-        self._mw.project.on_import_failed(msg)
+        self._mw.project.on_import_error(msg)
         self._lbl_status.setText(f"✕ {msg}")
 
     # ------------------------------------------------------------------

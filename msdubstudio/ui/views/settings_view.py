@@ -163,9 +163,7 @@ class _WhisperSection(QWidget):
         btn_bench.setStyleSheet(
             "background: #0078D4; color: white; border-radius: 6px; border: none; padding: 6px;"
         )
-        info_layout = QVBoxLayout(grp_info)
-        info_layout.addLayout(info_form)
-        info_layout.addWidget(btn_bench)
+        info_form.addRow(btn_bench)
         main_row.addWidget(grp_info)
 
         layout.addLayout(main_row)

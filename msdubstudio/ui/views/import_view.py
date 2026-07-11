@@ -329,16 +329,15 @@ class ImportView(QWidget):
 
         from msdubstudio.workers.import_worker import ImportWorker
 
-        opts = {
-            "extract_audio": self._chk_audio.isChecked(),
-            "detect_scenes": self._chk_scenes.isChecked(),
-            "detect_language": self._chk_lang.isChecked(),
-        }
+        self._mw.project.settings.extract_audio = self._chk_audio.isChecked()
+        self._mw.project.settings.detect_scenes = self._chk_scenes.isChecked()
+        self._mw.project.settings.detect_language = self._chk_lang.isChecked()
 
         worker = ImportWorker(
-            project=self._mw.project,
             video_path=self._video_path,
-            options=opts,
+            audio_output_path=str(self._mw.project.audio_path),
+            frames_dir=str(self._mw.project.frames_dir),
+            settings=self._mw.project.settings,
         )
         self._mw.set_active_worker(worker)
 

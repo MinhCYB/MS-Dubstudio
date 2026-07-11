@@ -131,11 +131,12 @@ class ProcessingOverlay(QWidget):
         self._current_step: str = ""
 
         self._setup_ui()
-        self.hide()
 
         # Cập nhật elapsed mỗi giây khi đang chạy
         self._elapsed_timer = QTimer(self)
         self._elapsed_timer.timeout.connect(self._tick_elapsed)
+
+        self.hide()
 
     # ------------------------------------------------------------------
     # UI Setup

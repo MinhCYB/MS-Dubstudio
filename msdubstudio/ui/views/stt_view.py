@@ -262,8 +262,9 @@ class STTView(QWidget):
         settings.whisper_task = self._cmb_task.currentText().lower()
 
         worker = STTWorker(
-            project=project,
             audio_path=str(project.project_dir / "audio" / "audio.wav"),
+            settings=settings,
+            scenes=self._mw.imported_scenes,
         )
         self._mw.set_active_worker(worker)
 

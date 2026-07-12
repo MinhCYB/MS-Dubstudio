@@ -362,7 +362,8 @@ class ImportView(QWidget):
         self._mw._overlay.update_progress(current, total)
 
     def _on_import_finished(self, metadata, scenes) -> None:
-        self._mw.project.on_import_completed(metadata, scenes)
+        self._mw.project.on_import_completed(metadata)  
+        self._mw.imported_scenes = scenes                
         self._refresh_tree()
         self._lbl_status.setText(f"✓ Import complete — {len(scenes)} scenes detected")
 

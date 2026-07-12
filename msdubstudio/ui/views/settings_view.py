@@ -371,7 +371,8 @@ class SettingsView(QWidget):
     def _switch_section(self, section_id: str) -> None:
         for sid, btn in self._buttons.items():
             btn.setChecked(sid == section_id)
-        idx = list(k for k, _ in _SIDEBAR_ITEMS).index(section_id) if section_id in [k for k, _ in _SIDEBAR_ITEMS] else 0
+        section_ids = [sid for _, sid in _SIDEBAR_ITEMS]
+        idx = section_ids.index(section_id) if section_id in section_ids else 0
         self._stack.setCurrentIndex(idx)
 
     def on_activated(self) -> None:

@@ -78,6 +78,8 @@ class MainWindow(QMainWindow):
         self._active_worker = None  # worker đang chạy (để cancel)
         self._cfg = AppConfig.get()
 
+        self.imported_scenes: list = [] 
+
         self.setWindowTitle(APP_NAME)
         self.resize(self._cfg.window_width, self._cfg.window_height)
         self.setMinimumSize(900, 600)
